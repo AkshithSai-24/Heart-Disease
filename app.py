@@ -19,7 +19,7 @@ def startprediction():
 
 
 
-@app.route('/predict', methods=['GET','POST'])
+@app.route('/predict', methods=['POST'])
 def predict():
     if request.method == 'POST':
 
