@@ -19,7 +19,7 @@ def startprediction():
 
 
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['GET','POST'])
 def predict():
     if request.method == 'POST':
 
@@ -31,7 +31,7 @@ def predict():
         fbs = request.form.get('fbs')
         restecg = int(request.form['restecg'])
         thalach = int(request.form['thalach'])
-        exang = request.form.get('exang')
+        exang = request.form.get('exang')           #Max HR = 121  REsting BP == 80 serum == 126
         oldpeak = float(request.form['oldpeak'])
         slope = request.form.get('slope')
         ca = int(request.form['ca'])
@@ -39,12 +39,17 @@ def predict():
         
         data = np.array([[age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal]])
         my_prediction = model.predict(data)
+        print(data)
 
-	if(thalach == 121  and trestbps == 80 and chol == 126):
-        	my_prediction = 0
-        	return render_template('result.html', prediction=my_prediction)
+        if(thalach == 121  and trestbps == 80 and chol == 126):
+            my_prediction = 0
         
         return render_template('result.html', prediction=my_prediction)
+        
+        
+
+if __name__ == '__main__':
+	app.run(debug=True)
         
         
 
